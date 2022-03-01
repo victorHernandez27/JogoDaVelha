@@ -16,7 +16,7 @@ namespace JogoDaVelha
         public JogoDaVelha()
         {
             fimDoJogo = false;
-            posicoes = new string[3,3];
+            posicoes = new string[3, 3];
 
             posicoes[0, 0] = " ";
             posicoes[0, 1] = " ";
@@ -50,7 +50,7 @@ namespace JogoDaVelha
             Console.Clear();
             Console.WriteLine(DesenharTabela());
         }
-        
+
 
         private void EscolhaJogador()
         {
@@ -71,10 +71,10 @@ namespace JogoDaVelha
             PocisionaEscolha(posicaoEscolhidaLinha, posicaoEscolhidaColuna);
         }
 
-        
+
         private void PocisionaEscolha(int posicaoEscolhidaLiha, int posicaoEscolhidaColuna)
         {
-            posicoes[posicaoEscolhidaLiha,posicaoEscolhidaColuna] = vez;
+            posicoes[posicaoEscolhidaLiha, posicaoEscolhidaColuna] = vez;
             jogadas++;
 
         }
@@ -94,88 +94,102 @@ namespace JogoDaVelha
 
         private void VerificaStatus(string[,] posicoes)
         {
-            
-            if(jogadas >= 5)
+
+            if (jogadas >= 5)
             {
-                if (VitoriaVertical(posicoes) || VitoriaDiagonal(posicoes) || VitoriaHorizontal(posicoes))
+                if (VitoriaVertical() || VitoriaDiagonal() || VitoriaHorizontal())
                 {
                     fimDoJogo = true;
-                    Console.WriteLine("Fim de Jogo!!! Vitória de {0}", vez);                    
-                                        
+                    Console.WriteLine("Fim de Jogo!!! Vitória de {0}", vez);
+
                 }
                 else
                 {
-                    if(jogadas == 9)
+                    if (jogadas == 9)
                     {
                         fimDoJogo = true;
                         Console.WriteLine("Fim de Jogo!!! EMPATE");
                     }
                 }
             }
-           
+
         }
 
-        private bool VitoriaHorizontal(string [,] posicoes)
+        private bool VitoriaHorizontal()
         {
-           for(int linha = 0; linha < posicoes.GetLength(0); linha++ )
+            if ((posicoes[0,0] == "X") && (posicoes[0,1] == "X") && (posicoes[0,2] == "X") || (posicoes[0, 0] == "O") && (posicoes[0, 1] == "O") && (posicoes[0, 2] == "O"))
             {
-                if((posicoes[linha, 0] == posicoes[linha,1] && posicoes[linha,0]== posicoes[linha, 2]))
-                {
-                    return true;
-                }                
+                return true;
             }
-            return false;
-        }
-        private bool VitoriaVertical(string[,] posicoes)
-        {
-
-           for(int coluna = 0; coluna < posicoes.GetLength(1); coluna++)
+            else
             {
-                if((posicoes[0, coluna] == posicoes[1,coluna] && posicoes[0,coluna]== posicoes[2, coluna]))
+                if ((posicoes[1, 0] == "X") && (posicoes[1, 1] == "X") && (posicoes[1, 2] == "X") || (posicoes[1, 0] == "O") && (posicoes[1, 1] == "O") && (posicoes[1, 2] == "O"))
                 {
                     return true;
                 }
-            }
-
-            return false;
-           
-        }
-        private bool VitoriaDiagonal(string[,] posicoes)
-        {
-            // diagonal principal 
-           for(int linha = 0; linha < posicoes.GetLength(0); linha++)
-            {
-                for(int coluna = 0; coluna < posicoes.GetLength(1); coluna++)
+                else
                 {
-                    if(linha == coluna)
+                    if ((posicoes[2, 0] == "X") && (posicoes[2, 1] == "X") && (posicoes[2, 2] == "X") || (posicoes[2, 0] == "O") && (posicoes[2, 1] == "O") && (posicoes[2, 2] == "O"))
                     {
-                        if(posicoes[linha,coluna] == posicoes[linha, coluna])
-                        {
-                            return true;
-                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
+            }
+        }
+        private bool VitoriaVertical()
+        {
 
-                // diagnonal secundária
-                for (int coluna = 0; coluna < posicoes.GetLength(1); coluna++)
+            if ((posicoes[0, 0] == "X") && (posicoes[1, 0] == "X") && (posicoes[2, 0] == "X") || (posicoes[0, 0] == "O") && (posicoes[1, 0] == "O") && (posicoes[2, 0] == "O"))
+            {
+                return true;
+            }
+            else
+            {
+                if ((posicoes[0, 1] == "X") && (posicoes[1, 1] == "X") && (posicoes[2, 1] == "X") || (posicoes[0, 1] == "O") && (posicoes[1, 1] == "O") && (posicoes[2, 1] == "O"))
                 {
-                    if (linha+coluna == 3)
+                    return true;
+                }
+                else
+                {
+                    if ((posicoes[0, 2] == "X") && (posicoes[1, 2] == "X") && (posicoes[2, 2] == "X") || (posicoes[0, 2] == "O") && (posicoes[1, 2] == "O") && (posicoes[2, 2] == "O"))
                     {
-                        if (posicoes[linha, coluna] == posicoes[linha, coluna])
-                        {
-                            return true;
-                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }
 
-            return false;
+        }
+        private bool VitoriaDiagonal()
+        {
+            if ((posicoes[0, 0] == "X") && (posicoes[1, 1] == "X") && (posicoes[2, 2] == "X") || (posicoes[0, 0] == "O") && (posicoes[1, 1] == "O") && (posicoes[2, 2] == "O"))
+            {
+                return true;
+            }
+            else
+            {
+                if ((posicoes[0, 2] == "X") && (posicoes[1, 1] == "X") && (posicoes[2, 0] == "X") || (posicoes[0, 2] == "O") && (posicoes[1, 1] == "O") && (posicoes[2, 0] == "O"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
         }
 
         private void PassarVez()
         {
-           if(vez == "X")
+            if (vez == "X")
             {
                 vez = "O";
             }
@@ -190,9 +204,9 @@ namespace JogoDaVelha
             return "\t\tJogando\n\n" +
                    "\t\tColunas\n\n" +
                    "\t___0__|__1__|__2__\n" +
-                   "\t0__" + posicoes[0,0] + "__|__" + posicoes[0,1] + "__|__" + posicoes[0,2] + "__\n" +
-                   "Linhas\t1__" + posicoes[1,0] + "__|__" + posicoes[1,1] + "__|__" + posicoes[1,2] + "__\n" +
-                   "\t2__" + posicoes[2,0] + "__|__" + posicoes[2,1] + "__|__" + posicoes[2,2] + "__\n\n";
-        }       
+                   "\t0__" + posicoes[0, 0] + "__|__" + posicoes[0, 1] + "__|__" + posicoes[0, 2] + "__\n" +
+                   "Linhas\t1__" + posicoes[1, 0] + "__|__" + posicoes[1, 1] + "__|__" + posicoes[1, 2] + "__\n" +
+                   "\t2__" + posicoes[2, 0] + "__|__" + posicoes[2, 1] + "__|__" + posicoes[2, 2] + "__\n\n";
+        }
     }
 }
